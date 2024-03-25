@@ -175,3 +175,104 @@ mostrarTabla(traumatologia, '<h3  class="tituloColor">TRAUMATOLOGÍA</h3>');
 
 // Llamar a la función para mostrar las consultas de odontología
 mostrarTabla(odontologia, '<h3  class="tituloColor">ODONTOLOGÍA</h3>');
+
+
+
+
+
+// Nuevas horas a agregar al arreglo de Traumatología
+let nuevasHoras = [
+    {
+        Hora: '09:00',
+        Especialista: 'RENÉ POBLETE',
+        Paciente: 'ANA GELLONA',
+        Rut: '13123329-7',
+        Prevision: 'ISAPRE'
+    },
+    {
+        Hora: '09:30',
+        Especialista: 'MARIA SOLAR',
+        Paciente: 'RAMIRO ANDRADE',
+        Rut: '12221451-K',
+        Prevision: 'FONASA'
+    },
+    {
+        Hora: '10:00',
+        Especialista: 'RAUL LOYOLA',
+        Paciente: 'CARMEN ISLA',
+        Rut: '10112348-3',
+        Prevision: 'ISAPRE'
+    },
+    {
+        Hora: '10:30',
+        Especialista: 'ANTONIO LARENAS',
+        Paciente: 'PABLO LOAYZA',
+        Rut: '13453234-1',
+        Prevision: 'ISAPRE'
+    },
+    {
+        Hora: '12:00',
+        Especialista: 'MATIAS ARAVENA',
+        Paciente: 'SUSANA POBLETE',
+        Rut: '14345656-6',
+        Prevision: 'FONASA'
+    }
+];
+
+// Agregar las nuevas horas al arreglo de Traumatología
+traumatologia.push(...nuevasHoras);
+
+// Tabla actualizada de Traumatología
+mostrarTabla(traumatologia, '<h3  class="tituloColor">TRAUMATOLOGÍA (Actualizada)</h3>');
+
+
+//-----Dental:
+//Imprimir en la página HTML, mediante document.write y/o las funciones que estime conveniente, la lista de consultas médicas de Dental. Sin embargo, debe hacerlo separando por un guión cada dato desplegado y cada fila de información debe estar separada por un párrafo
+
+let listaConsultasDental = (consultas) => {
+    let imprimirconsultasDental = "<table><tr><th>Hora</th><th>Especialista </th><th>Paciente</th><th>Rut</th><th>Previsión</th></tr>";
+    for (let i = 0; i < consultas.length; i++) {
+        imprimirconsultasDental += `<tr>
+        <td>${consultas[i].Hora}</td>
+        <td>${consultas[i].Especialista}</td>
+        <td>${consultas[i].Paciente}</td>
+        <td>${consultas[i].Rut}</td>
+        <td>${consultas[i].Prevision}</td>
+        </tr>`;
+    }
+    imprimirconsultasDental += "</table>";
+    document.write('<div class="centrado">' + imprimirconsultasDental + '</div>');
+}
+// Llamar a la función para imprimir las consultas de odontología
+document.write('<h3 class="tituloColor">ODONTOLOGÍA</h3>');
+listaConsultasDental(odontologia);
+
+
+//--. Imprimir un listado total de todos los pacientes que se atendieron en el centro médico
+function imprimirPacientesIsapre(consultas) {
+    let pacientesIsapre = "";
+    for (let i = 0; i < consultas.length; i++) {
+        if (consultas[i].Prevision === "ISAPRE") {
+            pacientesIsapre += `${consultas[i].Paciente} - ${consultas[i].Prevision}<br><br>`; // Agregar un salto de línea después de cada paciente
+        }
+    }
+    document.write('<div class="centrado">' + pacientesIsapre + '</div>');
+}
+document.write('<h3 class="tituloColor">PACIENTES CON ISAPRE</h3>');
+// Llamar a la función para imprimir los pacientes con previsión ISAPRE
+imprimirPacientesIsapre([...radiologia, ...traumatologia, ...odontologia]);
+
+
+function PcteFonasaTraumatologia(consultas) {
+    let pacientesTrauma = "";
+    for (let i = 0; i < consultas.length; i++) {
+        if (consultas[i].Prevision === "FONASA") {
+            pacientesTrauma += `${consultas[i].Paciente} - ${consultas[i].Prevision}<br><br>`; // Agregar un salto de línea después de cada paciente
+        }
+    }
+    document.write('<div class="centrado">' + pacientesTrauma + '</div>');
+}
+document.write('<h3 class="tituloColor">PACIENTES DE TRAUMATOLOGIA CON LA PREVISION FONASA</h3>');
+
+// Llamar a la función para imprimir los pacientes con previsión FONASA en traumatología
+PcteFonasaTraumatologia([...traumatologia]);

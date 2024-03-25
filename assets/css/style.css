@@ -40,3 +40,10 @@ th{
     font-weight: bold;
     
 }
+
+.centrado {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  
+}
