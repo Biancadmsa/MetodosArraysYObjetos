@@ -149,7 +149,7 @@ function mostrarTabla(consultas, titulo) {
     document.write(`<h2>${titulo}</h2>`);
     
     // Mostrar primera y última atención
-    document.write(`<strong><p>Primera atención: ${consultas[0].Paciente} - ${consultas[0].Prevision} | Última atención: ${consultas[consultas.length - 1].Paciente} - ${consultas[consultas.length - 1].Prevision}</p></strong>`);
+    document.write(`<strong><span>Primera atención: ${consultas[0].Paciente} - ${consultas[0].Prevision} | Última atención: ${consultas[consultas.length - 1].Paciente} - ${consultas[consultas.length - 1].Prevision}</span></strong>`);
 
     // Tabla
     document.write('<table class="tablen"><tr><th>HORA</th><th>ESPECIALISTA</th><th>PACIENTE</th><th>RUT</th><th>PREVISIÓN</th></tr>');
@@ -180,7 +180,7 @@ mostrarTabla(odontologia, '<h3  class="tituloColor">ODONTOLOGÍA</h3>');
 
 
 
-// Nuevas horas a agregar al arreglo de Traumatología
+//--------------- Primera Actividad---Agregar Nuevas horas al arreglo de Traumatología
 let nuevasHoras = [
     {
         Hora: '09:00',
@@ -219,60 +219,109 @@ let nuevasHoras = [
     }
 ];
 
-// Agregar las nuevas horas al arreglo de Traumatología
 traumatologia.push(...nuevasHoras);
-
-// Tabla actualizada de Traumatología
 mostrarTabla(traumatologia, '<h3  class="tituloColor">TRAUMATOLOGÍA (Actualizada)</h3>');
 
 
-//-----Dental:
+//Segunda Actividad-- Eliminar el primer y ultimo elemento del arreglo de Radiología
+// Eliminar el primer elemento del arreglo de radiología
+radiologia.shift();
+document.write('<h3 class="tituloColor">RADIOLOGÍA (Eliminando el primer elemento Método (Shift))</h3>');
+mostrarTabla(radiologia, '');
+
+// Eliminar el ultimo elemento del arreglo de radiología
+radiologia.pop();
+document.write('<h3 class="tituloColor">RADIOLOGÍA (Eliminando el último elemento Método (Pop))</h3>');
+mostrarTabla(radiologia, '')
+
+
+//Tercera Actividad-----Dental:
 //Imprimir en la página HTML, mediante document.write y/o las funciones que estime conveniente, la lista de consultas médicas de Dental. Sin embargo, debe hacerlo separando por un guión cada dato desplegado y cada fila de información debe estar separada por un párrafo
 
-let listaConsultasDental = (consultas) => {
-    let imprimirconsultasDental = "<table><tr><th>Hora</th><th>Especialista </th><th>Paciente</th><th>Rut</th><th>Previsión</th></tr>";
-    for (let i = 0; i < consultas.length; i++) {
-        imprimirconsultasDental += `<tr>
-        <td>${consultas[i].Hora}</td>
-        <td>${consultas[i].Especialista}</td>
-        <td>${consultas[i].Paciente}</td>
-        <td>${consultas[i].Rut}</td>
-        <td>${consultas[i].Prevision}</td>
-        </tr>`;
-    }
-    imprimirconsultasDental += "</table>";
-    document.write('<div class="centrado">' + imprimirconsultasDental + '</div>');
+function imprimirConsultasDental(consultas) {
+    consultas.forEach(consulta => {
+        document.write("<div class='divForEach'>" + "<p>" + consulta.Hora + " - " + consulta.Especialista + " - " + consulta.Paciente + " - " + consulta.Rut + " - " + consulta.Prevision +"</p>");
+
+    });
 }
 // Llamar a la función para imprimir las consultas de odontología
-document.write('<h3 class="tituloColor">ODONTOLOGÍA</h3>');
-listaConsultasDental(odontologia);
+document.write('<h3 class="tituloColor">CONSULTAS ODONTOLOGÍA (Método forEach)</h3>');
+imprimirConsultasDental(odontologia);
 
 
-//--. Imprimir un listado total de todos los pacientes que se atendieron en el centro médico
-function imprimirPacientesIsapre(consultas) {
-    let pacientesIsapre = "";
+
+
+//--. Cuarta Actividad ---Imprimir un listado total de todos los pacientes que se atendieron en el centro médico
+
+
+//HACERLO CON ARRAY:
+
+let pacientesTotal = [];
+//SUMAREMOS TODOS LOS PACIENTES
+radiologia.forEach(consulta => {
+    pacientesTotal.push(consulta.Paciente);
+});
+// Agregar pacientes de traumatología
+traumatologia.forEach(consulta => {
+    pacientesTotal.push(consulta.Paciente);
+});
+// Agregar pacientes de odontología
+odontologia.forEach(consulta => {
+    pacientesTotal.push(consulta.Paciente);
+})
+
+// Imprimir los pacientes uno por uno en párrafos separados
+document.write('<h3 class="tituloColor">LISTADO DE PACIENTES ATENDIDOS (Con método push Y ForEach)</h3>');
+pacientesTotal.forEach(paciente => {
+    document.write(`<p>${paciente}</p>`);
+});
+
+
+//hacerlo sin Método de Array
+function pacientectesAtendidos(consultas) {
+    let TotalAtendidos = "";
+    let totalPacientes = 0;
     for (let i = 0; i < consultas.length; i++) {
-        if (consultas[i].Prevision === "ISAPRE") {
-            pacientesIsapre += `${consultas[i].Paciente} - ${consultas[i].Prevision}<br><br>`; // Agregar un salto de línea después de cada paciente
+        if (consultas[i].Prevision === "ISAPRE" || consultas[i].Prevision === "FONASA") {
+            TotalAtendidos += `${consultas[i].Paciente} - ${consultas[i].Prevision}<br><br>`; // Agregar un salto de línea después de cada paciente
+            totalPacientes++; 
         }
     }
-    document.write('<div class="centrado">' + pacientesIsapre + '</div>');
+    document.write('<div class="centrado">' + TotalAtendidos + '</div>');
+    return totalPacientes; // Devolver el total de pacientes
 }
-document.write('<h3 class="tituloColor">PACIENTES CON ISAPRE</h3>');
+document.write('<h3 class="tituloColor">TOTAL DE PACIENTES ATENDIDOS EN EL CENTRO MÉDICO (Sin método de Array)</h3>');
 // Llamar a la función para imprimir los pacientes con previsión ISAPRE
-imprimirPacientesIsapre([...radiologia, ...traumatologia, ...odontologia]);
+let totalPacientesAtendidos = pacientectesAtendidos([...radiologia, ...traumatologia, ...odontologia]);
+document.write(`<h4>El Total de los pacientes atendidos es : ${totalPacientesAtendidos}</h4>`);
 
 
-function PcteFonasaTraumatologia(consultas) {
-    let pacientesTrauma = "";
-    for (let i = 0; i < consultas.length; i++) {
-        if (consultas[i].Prevision === "FONASA") {
-            pacientesTrauma += `${consultas[i].Paciente} - ${consultas[i].Prevision}<br><br>`; // Agregar un salto de línea después de cada paciente
-        }
-    }
-    document.write('<div class="centrado">' + pacientesTrauma + '</div>');
+
+
+// Quinta actividad--Filtrar aquellos pacientes que indican ser de ISAPRE en la lista de consultas médicas de Dental 
+
+function mostrarIsapreDental(consultas) {
+   let isaprePacientesDental = consultas.filter(consulta => consulta.Prevision === 'ISAPRE');
+    isaprePacientesDental.forEach(consulta => {
+        document.write('<div class="metodofilter">' + consulta.Paciente + ' - ' + consulta.Prevision + '</div> <br>');
+    });
 }
-document.write('<h3 class="tituloColor">PACIENTES DE TRAUMATOLOGIA CON LA PREVISION FONASA</h3>');
 
-// Llamar a la función para imprimir los pacientes con previsión FONASA en traumatología
-PcteFonasaTraumatologia([...traumatologia]);
+// Llamar a la función para imprimir las consultas de odontología con previsión ISAPRE
+document.write('<h3 class="tituloColor">CONSULTAS ODONTOLOGÍA ISAPRE (Método filter)</h3>');
+mostrarIsapreDental(odontologia);
+
+
+
+//----Sexta Actividad Filtrar aquellos pacientes que indican ser de --"ISAPRE"-- en la lista de consultas médicas de Dental
+
+function mostrarFonasaTrauma(consultas) {
+    let pacienteFonasaTrauma = consultas.filter(consulta => consulta.Prevision === 'FONASA');
+     pacienteFonasaTrauma.forEach(consulta => {
+         document.write('<div class="metodofilter">' + consulta.Paciente + ' - ' + consulta.Prevision + '</div> <br>');
+     });
+ }
+ 
+ // Llamar a la función para imprimir las consultas de odontología con previsión ISAPRE
+ document.write('<h3 class="tituloColor">CONSULTAS TRAUMATOLOGÍA Y FONASA (Método filter)</h3>');
+ mostrarFonasaTrauma(traumatologia);
