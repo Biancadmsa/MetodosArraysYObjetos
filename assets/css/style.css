@@ -1,0 +1,42 @@
+
+
+h1{
+    color:rgb(10, 4, 4);
+    text-align: center;
+    font-size: 45px;  
+}
+
+.tituloColor{
+    color:rgb(2, 0, 0);
+    font-size: 25px;
+    justify-content: center;
+    align-items:center;
+    display: flex;
+
+}
+.tablen{
+    margin-bottom: 20px;
+}
+
+ .tablen th, .tablen td {
+    border: 1px solid black;
+    background-color: rgb(233, 238, 236);
+}
+
+.tablen, h2{
+    justify-content: center;
+    display: flex;
+}
+p{
+    font-style: italic;
+    justify-content: center;
+    display: flex;
+    background-color: rgb(235, 230, 84);
+  
+}
+
+th{
+    color:red;
+    font-weight: bold;
+    
+}
